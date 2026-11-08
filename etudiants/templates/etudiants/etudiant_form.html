@@ -1,16 +1,28 @@
-<h1> {%if etudiant %}Modifier{% else %}Ajouter un étudiant{% endif %}</h1>
+{% extends 'etudiants/base.html' %}
+{% block title %}{% if etudiant %}Modifier{% else %}Ajouter{% endif %} un étudiant{% endblock %}
 
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Ajouter</button>
-</form>
-<a href="{% url 'liste_etudiants' %}">Retour à la liste</a>
+{% block content %}
+<div class="card shadow-sm mx-auto" style="max-width: 600px;">
+    <div class="card-header bg-white">
+        <h1 class="h4 mb-0">{% if etudiant %}Modifier l'étudiant{% else %}Ajouter un étudiant{% endif %}</h1>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% for error in field.errors %}
+                    <div class="text-danger small">{{ error }}</div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Enregistrer</button>
+                <a href="{% url 'liste_etudiants' %}" class="btn btn-outline-danger">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

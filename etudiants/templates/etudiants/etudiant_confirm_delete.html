@@ -1,7 +1,16 @@
-<h1>Supprimer un étudiant</h1>
-<p>Êtes-vous sûr de vouloir supprimer l'étudiant {{ etudiant.prenom }} {{ etudiant.nom }} ?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Supprimer</button>
-    <a href="{% url 'liste_etudiants' %}">Annuler</a>
-</form>
+{% extends 'etudiants/base.html' %}
+{% block title %}Supprimer {{ etudiant }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-danger mx-auto" style="max-width: 600px;">
+    <div class="card-body text-center">
+        <h1 class="h4">Confirmer la suppression</h1>
+        <p class="my-3">Voulez-vous vraiment supprimer <strong>{{ etudiant }}</strong> ? Cette action est irréversible.</p>
+        <form method="post" class="d-flex justify-content-center gap-2">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+            <a href="{% url 'detail_etudiant' etudiant.pk %}" class="btn btn-outline-primary">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

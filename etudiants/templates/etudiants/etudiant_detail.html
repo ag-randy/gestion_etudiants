@@ -1,11 +1,24 @@
-<h1>{{ etudiant.prenom }} {{ etudiant.nom }}</h1>
+{% extends 'etudiants/base.html' %}
+{% block title %}{{ etudiant }}{% endblock %}
 
-<p><strong>Nom :</strong> {{ etudiant.nom }}</p>
-<p><strong>Prénom :</strong> {{ etudiant.prenom }}</p>
-<p><strong>Programme :</strong> {{ etudiant.programme }}</p>
-<p><strong>Remarque :</strong> {{ etudiant.remarque|default:"Aucune remarque" }}</p>
-<p><strong>Date d'inscription :</strong> {{ etudiant.date_inscription }}</p>
-
-<a href="{% url 'liste_etudiants' %}">Retour à la liste</a>
-<a href="{% url 'etudiant_update' etudiant.pk %}">Modifier</a>
-<a href="{% url 'etudiant_delete' etudiant.pk %}">Supprimer</a>
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h1 class="h4 mb-0">{{ etudiant.prenom }} {{ etudiant.nom }}</h1>
+    </div>
+    <div class="card-body">
+        <table class="table mb-0">
+            <tr><th style="width: 30%">Nom</th><td>{{ etudiant.nom }}</td></tr>
+            <tr><th>Prénom</th><td>{{ etudiant.prenom }}</td></tr>
+            <tr><th>Programme</th><td>{{ etudiant.programme }}</td></tr>
+            <tr><th>Remarque</th><td>{{ etudiant.remarque|default:"Aucune remarque"|linebreaksbr }}</td></tr>
+            <tr><th>Date d'inscription</th><td>{{ etudiant.date_inscription }}</td></tr>
+        </table>
+    </div>
+    <div class="card-footer bg-white d-flex gap-2">
+        <a href="{% url 'liste_etudiants' %}" class="btn btn-outline-primary">Retour</a>
+        <a href="{% url 'etudiant_update' etudiant.pk %}" class="btn btn-outline-warning">Modifier</a>
+        <a href="{% url 'etudiant_delete' etudiant.pk %}" class="btn btn-outline-danger">Supprimer</a>
+    </div>
+</div>
+{% endblock %}
