@@ -24,3 +24,19 @@ def liste_etudiants(request):
 def etudiant_detail(request, pk):
     etudiant = get_object_or_404(Etudiant, pk=pk)
     return render(request, 'etudiants/etudiant_detail.html', {'etudiant': etudiant})
+
+def etudiant_update(request, pk):
+    etudiant = get_object_or_404(Etudiant, pk=pk)
+    if request.method == 'POST':
+        form = EtudiantForm(request.POST, instance=etudiant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Étudiant mis à jour avec succès !')
+            return redirect('etudiant_detail', pk=etudiant.pk)
+        else:
+            messages.error(request, 'Veuillez corriger les erreurs ci-dessous.')
+    else:
+        form = EtudiantForm(instance=etudiant)
+    
+    return render(request, 'etudiants/etudiant_form.html', {'form': form})
+
