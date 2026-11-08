@@ -40,3 +40,11 @@ def etudiant_update(request, pk):
     
     return render(request, 'etudiants/etudiant_form.html', {'form': form})
 
+def etudiant_delete(request, pk):
+    etudiant = get_object_or_404(Etudiant, pk=pk)
+    if request.method == 'POST':
+        etudiant.delete()
+        messages.success(request, 'Étudiant supprimé avec succès !')
+        return redirect('liste_etudiants')
+    
+    return render(request, 'etudiants/etudiant_confirm_delete.html', {'etudiant': etudiant})
