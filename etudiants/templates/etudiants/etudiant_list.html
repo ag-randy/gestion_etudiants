@@ -1,0 +1,16 @@
+<h1>Liste des étudiants</h1>
+
+<a href="{% url 'etudiant_create' %}">Ajouter un étudiant</a>
+
+<ul>
+    {% for etudiant in etudiants %}
+        <li>
+            <a href="{% url 'etudiant_detail' etudiant.pk %}">
+                {{ etudiant.prenom }} {{ etudiant.nom }}
+            </a>
+            - {{ etudiant.programme }}
+        </li>
+    {% empty %}
+        <li>Aucun étudiant trouvé.</li>
+    {% endfor %}
+</ul>
